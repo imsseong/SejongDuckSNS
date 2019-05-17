@@ -96,14 +96,12 @@ input{
   display: block;
   overflow: hidden;
   width:96%;
+  height:90%;
   font-size: 22px;
   margin-left: 2%;
-  background-color: #eeeeee;
   float:left;
   position:absolute;
   z-index:1;
-  border-left:1px solid #000000;
-  border-right:1px solid #000000;
   word-break:break-all;
 }
 .right-navigation{

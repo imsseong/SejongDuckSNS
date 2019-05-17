@@ -8,16 +8,13 @@ ul li
   list-style: none;
 }
 
-#login_box
-{
-  width:500px;
-  height:200px;
-  border:solid 2px gray;
+.section-text form{
+  height: 100%;
 }
 
 table
 {
-  margin-top:10px;
+  margin:200px auto;
 }
 
 .mem a:hover
@@ -32,8 +29,15 @@ table
   background: skyblue;
   border:solid 1px skyblue;
 }
-
+.login-text{
+  font-size: 14px;
+  text-align: center;
+}
 .inph
 {
   height:25px;
+  border: 1px solid #000000;
+}
+.member-button{
+  width:250px;
 }

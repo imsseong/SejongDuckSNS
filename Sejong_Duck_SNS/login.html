@@ -33,31 +33,31 @@
 
     <div id="section-area">
       <div class="section-text">
-        <div class="login-box">
-          <form action="http://106.10.57.227/login.php" method="post">
-            <table align="center" border="0" cellspacing="0" width="300">
-              <tr>
-                <td width="130" colspan="1">
-                  <input type="text" name="userid" class="inph" required>
-                </td>
-                <td rowspan="2" align="center" width="100">
-                  <button type="submit" id="btn">로그인</button>
-                </td>
-              </tr>
-              <tr>
-                <td width="130" colspan="1">
-                  <input type="password" name="userpw" class="inph" required>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="3" align="center" class="mem">
-                  <a href="member.html">회원가입 하시겠습니까?</a>
-                </td>
-              </tr>
-            </table>
-          </form>
-        </div>
-        <br><br><br><br>
+        <form action="http://106.10.57.227/login.php" method="post">
+          <table align="center" border="0" cellspacing="0" width="300">
+            <tr>
+              <td class="login-text">아이디</td>
+              <td width="130" colspan="1">
+                <input type="text" name="userid" class="inph" required>
+              </td>
+              <td rowspan="2" align="center" width="100">
+                <button type="submit" id="btn">로그인</button>
+              </td>
+            </tr>
+            <tr>
+              <td class="login-text">패스워드</td>
+              <td width="130" colspan="1">
+                <input type="password" name="userpw" class="inph" required>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3" align="center" class="mem">
+                <a href="member.html">회원가입 하시겠습니까?</a>
+              </td>
+            </tr>
+          </table>
+        </form>
+
       </div>
     </div>
 
