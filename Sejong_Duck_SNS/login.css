@@ -1,0 +1,43 @@
+a
+{
+  text-decoration: none;
+}
+
+ul li
+{
+  list-style: none;
+}
+
+.section-text form{
+  height: 100%;
+}
+
+table
+{
+  margin:200px auto;
+}
+
+.mem a:hover
+{
+  color:red;
+}
+
+#btn
+{
+  width:95px;
+  height:55px;
+  background: skyblue;
+  border:solid 1px skyblue;
+}
+.login-text{
+  font-size: 14px;
+  text-align: center;
+}
+.inph
+{
+  height:25px;
+  border: 1px solid #000000;
+}
+.member-button{
+  width:250px;
+}
