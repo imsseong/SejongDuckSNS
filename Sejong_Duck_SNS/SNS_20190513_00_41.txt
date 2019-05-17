@@ -1,0 +1,147 @@
+﻿-- 테이블 순서는 관계를 고려하여 한 번에 실행해도 에러가 발생하지 않게 정렬되었습니다.
+
+-- USER Table Create SQL
+CREATE TABLE SejongDuckSNS.USER
+(
+    `uId`       INT            NOT NULL    AUTO_INCREMENT COMMENT '회원번호', 
+    `loginId`   VARCHAR(45)    NOT NULL    COMMENT '회원아이디', 
+    `email`     VARCHAR(45)    NOT NULL    COMMENT '이메일', 
+    `password`  VARCHAR(30)    NOT NULL    COMMENT '비밀번호', 
+    `name`      VARCHAR(10)    NOT NULL    COMMENT '이름', 
+    `joinDate`  VARCHAR(20)    NOT NULL    COMMENT '가입날짜', 
+    `state`     INT            NOT NULL    COMMENT '상태', 
+    PRIMARY KEY (uId)
+);
+
+ALTER TABLE SejongDuckSNS.USER COMMENT '회원';
+
+
+-- POST Table Create SQL
+CREATE TABLE SejongDuckSNS.POST
+(
+    `pId`     INT            NOT NULL    AUTO_INCREMENT COMMENT '포스팅번호', 
+    `type`    INT            NOT NULL    COMMENT '타입', 
+    `uId`     INT            NOT NULL    COMMENT '작성자번호', 
+    `date`    VARCHAR(20)    NOT NULL    COMMENT '작성일', 
+    `update`  VARCHAR(20)    NULL        COMMENT '수정일', 
+    `views`   INT            NOT NULL    COMMENT '조회수', 
+    `likes`   INT            NOT NULL    COMMENT '좋아요수', 
+    PRIMARY KEY (pId)
+);
+
+ALTER TABLE SejongDuckSNS.POST COMMENT '포스팅';
+
+ALTER TABLE SejongDuckSNS.POST
+    ADD CONSTRAINT FK_POST_uId_USER_uId FOREIGN KEY (uId)
+        REFERENCES SejongDuckSNS.USER (uId) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+
+-- PROFILE Table Create SQL
+CREATE TABLE SejongDuckSNS.PROFILE
+(
+    `uId`        INT            NOT NULL    COMMENT '회원번호', 
+    `school`     VARCHAR(45)    NULL        COMMENT '학교', 
+    `company`    VARCHAR(45)    NULL        COMMENT '회사', 
+    `residence`  VARCHAR(45)    NULL        COMMENT '거주지', 
+    PRIMARY KEY (uId)
+);
+
+ALTER TABLE SejongDuckSNS.PROFILE COMMENT '프로필';
+
+ALTER TABLE SejongDuckSNS.PROFILE
+    ADD CONSTRAINT FK_PROFILE_uId_USER_uId FOREIGN KEY (uId)
+        REFERENCES SejongDuckSNS.USER (uId) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+
+-- FRIENDS Table Create SQL
+CREATE TABLE SejongDuckSNS.FRIENDS
+(
+    `uId`       INT    NOT NULL    COMMENT '회원번호', 
+    `frId`      INT    NOT NULL    COMMENT '친구번호', 
+    `relation`  INT    NOT NULL    COMMENT '관계', 
+    PRIMARY KEY (uId)
+);
+
+ALTER TABLE SejongDuckSNS.FRIENDS COMMENT '친구';
+
+ALTER TABLE SejongDuckSNS.FRIENDS
+    ADD CONSTRAINT FK_FRIENDS_uId_USER_uId FOREIGN KEY (uId)
+        REFERENCES SejongDuckSNS.USER (uId) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE SejongDuckSNS.FRIENDS
+    ADD CONSTRAINT FK_FRIENDS_frId_USER_uId FOREIGN KEY (frId)
+        REFERENCES SejongDuckSNS.USER (uId) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+
+-- POST_WRITING Table Create SQL
+CREATE TABLE SejongDuckSNS.POST_WRITING
+(
+    `pId`      INT         NOT NULL    COMMENT '포스팅번호', 
+    `content`  LONGTEXT    NOT NULL    COMMENT '내용', 
+    PRIMARY KEY (pId)
+);
+
+ALTER TABLE SejongDuckSNS.POST_WRITING COMMENT '글포스팅';
+
+ALTER TABLE SejongDuckSNS.POST_WRITING
+    ADD CONSTRAINT FK_POST_WRITING_pId_POST_pId FOREIGN KEY (pId)
+        REFERENCES SejongDuckSNS.POST (pId) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+
+-- POST_IMAGE Table Create SQL
+CREATE TABLE SejongDuckSNS.POST_IMAGE
+(
+    `pId`      INT             NOT NULL    COMMENT '포스팅번호', 
+    `content`  LONGTEXT        NOT NULL    COMMENT '내용', 
+    `url`      VARCHAR(200)    NOT NULL    COMMENT '이미지url', 
+    PRIMARY KEY (pId)
+);
+
+ALTER TABLE SejongDuckSNS.POST_IMAGE COMMENT '이미지포스팅';
+
+ALTER TABLE SejongDuckSNS.POST_IMAGE
+    ADD CONSTRAINT FK_POST_IMAGE_pId_POST_pId FOREIGN KEY (pId)
+        REFERENCES SejongDuckSNS.POST (pId) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+
+-- REPLY Table Create SQL
+CREATE TABLE SejongDuckSNS.REPLY
+(
+    `reId`    INT            NOT NULL    COMMENT '댓글번호', 
+    `pId`     INT            NOT NULL    COMMENT '포스팅번호', 
+    `uId`     INT            NOT NULL    COMMENT '댓글작성자', 
+    `reple`   VARCHAR(45)    NOT NULL    COMMENT '댓글내용', 
+    `reDate`  VARCHAR(20)    NOT NULL    COMMENT '댓글작성일', 
+    PRIMARY KEY (reId)
+);
+
+ALTER TABLE SejongDuckSNS.REPLY COMMENT '댓글';
+
+ALTER TABLE SejongDuckSNS.REPLY
+    ADD CONSTRAINT FK_REPLY_pId_POST_pId FOREIGN KEY (pId)
+        REFERENCES SejongDuckSNS.POST (pId) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE SejongDuckSNS.REPLY
+    ADD CONSTRAINT FK_REPLY_uId_USER_uId FOREIGN KEY (uId)
+        REFERENCES SejongDuckSNS.USER (uId) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+
+-- LIKE Table Create SQL
+CREATE TABLE SejongDuckSNS.LIKE
+(
+    `pId`  INT    NOT NULL    COMMENT '포스팅번호', 
+    `uId`  INT    NOT NULL    COMMENT '회원번호', 
+    PRIMARY KEY (pId)
+);
+
+ALTER TABLE SejongDuckSNS.LIKE COMMENT '좋아요';
+
+ALTER TABLE SejongDuckSNS.LIKE
+    ADD CONSTRAINT FK_LIKE_pId_POST_pId FOREIGN KEY (pId)
+        REFERENCES SejongDuckSNS.POST (pId) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE SejongDuckSNS.LIKE
+    ADD CONSTRAINT FK_LIKE_uId_USER_uId FOREIGN KEY (uId)
+        REFERENCES SejongDuckSNS.USER (uId) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+

@@ -1,0 +1,144 @@
+*{
+  margin:0;
+  padding:0;
+  font-family: '나눔 고딕','NanumGothic','맑은 고딕',Gothic;
+}
+a{
+  text-decoration:none;
+}
+li{
+  list-style: none;
+}
+body{
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #ffffff;
+}
+#page-wrapper{
+  width:100%;
+  height:100%;
+  background-color: #ffffff;
+}
+#main-header{
+  background-color: #f7a874;
+  width:100%;
+  height: 6%;
+  top:0;
+  position: fixed;
+  z-index: 4;
+  border-bottom: 1px solid #000000;
+}
+.header-item{
+
+}
+.main-mark{
+  float: left;
+  margin-left: 8px;
+  width:58px;
+  height:58px;
+}
+.search{
+  width:25%;
+  border: 1px solid #1b5ac2;
+  background: #ffffff;
+  float: left;
+  margin-left: 30px;
+  margin-top:5px;
+}
+input{
+  font-size:14px;
+  width:85%;
+  margin:5px;
+  padding: 3px;
+  border: 0;
+  outline: none;
+  float: left;
+}
+.search-button{
+  width:55px;
+  height:42px;
+  border: 0;
+  background-color: #e59560;
+  outline:none;
+  color:#000000;
+}
+.search-button:active{
+  background-color: #ba7e57;
+}
+.top-navigation{
+  float:right;
+}
+.top-navigation-item{
+  display: inline-block;
+  text-align: center;
+  width: 100px;
+  height:45px;
+  line-height: 40px;
+  border-radius:5px;
+  background-color: #e59560;
+  border: 1px solid #000000;
+  color:#000000;
+  margin-top:5px;
+  margin-right: 30px;
+}
+.top-navigation-item:active{
+  background-color: #ba7e57;
+}
+#section-area{
+  display: block;
+  width:85%;
+  height: 100%;
+  background-color: #ffffff;
+  position: absolute;
+  top:6%;
+}
+.section-text{
+  display: block;
+  overflow: hidden;
+  width:96%;
+  font-size: 22px;
+  margin-left: 2%;
+  background-color: #eeeeee;
+  float:left;
+  position:absolute;
+  z-index:1;
+  border-left:1px solid #000000;
+  border-right:1px solid #000000;
+  word-break:break-all;
+}
+.right-navigation{
+  background-color: #eeeeee;
+  position: fixed;
+  z-index: 3;
+  right:0px;
+  top:6%;
+  display:block;
+  width:15%;
+  height:93%;
+  border-left:1px solid #000000;
+  //float:left;
+}
+.right-navigation a{
+  display: block;
+  text-align: center;
+  width: 150px;
+  height:45px;
+  line-height: 45px;
+  margin:40px auto;
+  border-radius:5px;
+  border: 1px solid #000000;
+  background-color: #e59560;
+  color:#000000;
+}
+.right-navigation a:active{
+  background-color: #ba7e57;
+}
+#main-footer{
+  display: block;
+  width:85%;
+  height: 4%;
+  background-color: #f7a874;
+  position:fixed;
+  bottom: 0;
+  z-index: 2;
+}
