@@ -1,0 +1,17 @@
+.box {
+  border-bottom: 3px solid teal;
+  width: 50%;
+
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 1em;
+  grid-row-gap: 10px;
+  margin: 0 auto;
+}
+
+.wrapper label {
+  float: right;
+}
