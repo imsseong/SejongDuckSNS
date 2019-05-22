@@ -20,6 +20,12 @@
           </form>
         </div>
         <div class="top-navigation">
+          <?php
+          session_start();
+          if(isset($_SESSION['loginId'])) {
+            echo $_SESSION['loginId'];?> 계정으로 접속중입니다
+            <?php   }
+            ?>
           <a href="my.html">
             <p class="top-navigation-item">My</p>
           </a>
