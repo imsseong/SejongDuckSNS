@@ -5,8 +5,6 @@ mysqli_query($conn,"SET NAMES utf8");
 
 if(!$conn){
   echo "연결에 실패하였습니다 : " .mysql_connect_error();
-} else {
-  echo "연결이 완료되었습니다! ";
 }
 
 ?>
