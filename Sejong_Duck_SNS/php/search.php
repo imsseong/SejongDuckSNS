@@ -52,7 +52,7 @@ if(isset($_SESSION['loginId'])) {
 }
 
 $name = $_POST['name'];
-$query = "SELECT u.loginId, p.school, p.company, p.residence, p.profile FROM USER AS u
+$query = "SELECT u.loginId, p.* FROM USER AS u
 INNER JOIN PROFILE AS p USING (uId) WHERE u.name LIKE '%$name%'";
 //$query = "SELECT uId, loginId, name  FROM USER WHERE name like '%$name%'";
 $result = mysqli_query($conn, $query);
@@ -61,10 +61,10 @@ $num = mysqli_num_rows($result);
 
 if($num) { //select row 있으면
 ?>
-        <table align=center>
-          <thead align="center">
+        <table align='center'>
+          <thead align='center'>
             <tr>
-              <td>프로필사진</td>
+              <td style='width:30%;'>프로필사진</td>
               <td>친구정보</td>
               <td>친구맺기버튼</td>
             </tr>
@@ -76,11 +76,26 @@ if($num) { //select row 있으면
 ?>
 
             <tr>
-              <td><?php echo "<img src = '../img/profile/".$row['profile']."'>" ?></td>
-              <td><?php echo $row['loginId'] ?></td>
-              <td><?php echo $row['school'] ?></td>
-              <td><?php echo $row['company'] ?></td>
-              <td><?php echo $row['residence'] ?></td>
+              <form action = 'friends.php' method = 'post'>
+              <td><a href = '../my.html?id=<?php $row['uId'] ?>'><?php echo "<img src = '../img/profile/".$row['profile']."' style='position:relative; width:100%;vertical-align: bottom;'>" ?></a></td>
+              <td><div style="width:100%; text-align:center;"><a href = '../my.html?id=<?php $row['uId'] ?>'><h3><?php echo $row['loginId'] ?></a></h3><br>
+                <?php echo $row['school']." 입학" ?><br>
+                <?php echo $row['company']." 근무" ?><br>
+                <?php echo $row['residence']." 거주" ?></div>
+                <?php echo "<input type='text' name='uId' value='".$uId."'>" ?>
+                <?php echo "<input type='text' name='frId' value='".$row['uId']."'>" ?>
+              </td>
+              <td>
+                <?php
+                if($uId == $row['uId']) { // 본인 아이디일 경우
+                  echo "<input type='submit' name='submit_my' value='MY' style='width:80%;'>";
+                } else {
+                  echo "<input type='submit' name='submit' value='친구추가' style='width:80%;' onclick='alert('친구추가완료!')'>";
+                }
+                 ?>
+
+              </td>
+              </form>
             </tr>
 
 <?php
