@@ -52,7 +52,7 @@ if(isset($_SESSION['loginId'])) {
 }
 
 $name = $_POST['name'];
-$query = "SELECT u.loginId, p.* FROM USER AS u
+$query = "SELECT u.name, p.* FROM USER AS u
 INNER JOIN PROFILE AS p USING (uId) WHERE u.name LIKE '%$name%'";
 //$query = "SELECT uId, loginId, name  FROM USER WHERE name like '%$name%'";
 $result = mysqli_query($conn, $query);
@@ -78,12 +78,12 @@ if($num) { //select row 있으면
             <tr>
               <form action = 'friends.php' method = 'post'>
               <td><a href = '../my.html?id=<?php $row['uId'] ?>'><?php echo "<img src = '../img/profile/".$row['profile']."' style='position:relative; width:100%;vertical-align: bottom;'>" ?></a></td>
-              <td><div style="width:100%; text-align:center;"><a href = '../my.html?id=<?php $row['uId'] ?>'><h3><?php echo $row['loginId'] ?></a></h3><br>
+              <td><div style="width:100%; text-align:center;"><a href = '../my.html?id=<?php $row['uId'] ?>'><h3><?php echo $row['name'] ?></a></h3><br>
                 <?php echo $row['school']." 입학" ?><br>
                 <?php echo $row['company']." 근무" ?><br>
                 <?php echo $row['residence']." 거주" ?></div>
-                <?php echo "<input type='text' name='uId' value='".$uId."'>" ?>
-                <?php echo "<input type='text' name='frId' value='".$row['uId']."'>" ?>
+                <?php echo "<input type='hidden' name='uId' value='".$uId."'>" ?>
+                <?php echo "<input type='hidden' name='frId' value='".$row['uId']."'>" ?>
               </td>
               <td>
                 <?php
