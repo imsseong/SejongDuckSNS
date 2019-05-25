@@ -1,6 +1,12 @@
 <?php
 include 'dbconn.php';
 
+if(!isset($_SESSION['loginId'])) {
+  header("location: ../login.html");
+  echo "로그인이 필요합니다";
+  exit();
+}
+
 $uId = $_POST['uId'];
 $frId = $_POST['frId'];
 
