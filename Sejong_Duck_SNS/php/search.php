@@ -76,7 +76,7 @@ if($num) { //select row 있으면
 ?>
 
             <tr>
-              <form action = 'friends.php' method = 'post'>
+              <form action = 'makeFriends.php' method = 'post'>
               <td><a href = '../my.html?id=<?php $row['uId'] ?>'><?php echo "<img src = '../img/profile/".$row['profile']."' style='position:relative; width:100%;vertical-align: bottom;'>" ?></a></td>
               <td><div style="width:100%; text-align:center;"><a href = '../my.html?id=<?php $row['uId'] ?>'><h3><?php echo $row['name'] ?></a></h3><br>
                 <?php echo $row['school']." 입학" ?><br>
@@ -129,7 +129,7 @@ mysqli_close($conn);
       <a href='../post.html'>
         <p>POST</p>
       </a>
-      <a href='../friends.html'>
+      <a href='friendsList.php'>
         <p>친구 목록</p>
       </a>
       <a href='../setting.html'>
