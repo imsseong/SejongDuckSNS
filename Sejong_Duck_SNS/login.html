@@ -16,7 +16,7 @@
         <a href="home.html"><img src="img/duck.jpg" alt="mark" class="main-mark"></a>
         <div class="search">
           <form method="post" action="php/search.php">
-            <input type="text" placeholder="검색" name="name" value="이름을 입력하세요">
+            <input type="text" placeholder="검색" name="name" required>
             <button type="submit" class="search-button">검색</button>
           </form>
         </div>
@@ -24,7 +24,7 @@
           <a href="my.html">
             <p class="top-navigation-item">My</p>
           </a>
-          <a href="http://49.236.137.89/logincheck.php">
+          <a href="php/logincheck.php">
             <p class="top-navigation-item">Log in/out</p>
           </a>
         </div>
@@ -33,7 +33,7 @@
 
     <div id="section-area">
       <div class="section-text">
-        <form method="post" action="http://49.236.137.89/login.php">
+        <form method="post" action="php/login.php">
           <table align="center" border="0" cellspacing="0" width="300">
             <tr>
               <td class="login-text">아이디</td>

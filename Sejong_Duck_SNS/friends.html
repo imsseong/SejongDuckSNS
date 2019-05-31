@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
 <body>
+  <?php include("php/check.php"); ?>
   <div id="page-wrapper">
     <header id="main-header">
       <div class="header-item">
@@ -32,31 +33,12 @@
 
     <div id="section-area">
       <div class="section-text">
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
+        친구목록
+        <?php
+        include 'dbconn.php';
+        session_start();
+        echo "$_SESSION['loginId']";
+        ?>
         ss<br>
         ss<br>
         ss<br>
@@ -83,7 +65,7 @@
       <a href="post.html">
         <p>POST</p>
       </a>
-      <a href="php/friendsList.php">
+      <a href="friends.html">
         <p>친구 목록</p>
       </a>
       <a href="setting.html">
