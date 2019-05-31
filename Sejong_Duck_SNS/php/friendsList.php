@@ -9,13 +9,14 @@
 <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.2/css/all.css' integrity='sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay' crossorigin='anonymous'>
 
 <body>
+  <?php include("check.php")?>
   <div id='page-wrapper'>
     <header id='main-header'>
       <div class='header-item'>
         <a href='../home.html'><img src='../img/duck.jpg' alt='mark' class='main-mark'></a>
         <div class='search'>
-          <form method='post' action='http://49.236.137.89/php/search.php'>
-            <input type='text' placeholder='검색' name='name' value='이름을 입력하세요' required>
+          <form method='post' action='search.php'>
+            <input type='text' placeholder='검색' name='name' required>
             <button type='submit' class='search-button'>검색</button>
           </form>
         </div>
@@ -23,7 +24,7 @@
           <a href='../my.html'>
             <p class='top-navigation-item'>My</p>
           </a>
-          <a href='http://49.236.137.89/php/logincheck.php'>
+          <a href='logincheck.php'>
             <p class='top-navigation-item'>Log in/out</p>
           </a>
         </div>
