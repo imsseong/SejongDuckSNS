@@ -32,14 +32,15 @@
     </header>
 
     <div id='section-area'>
-      <div class='section-text'>
-        <h1>검색결과</h1>
+      <div class='section-text' style='overflow-y:scroll;'>
+        <h1>&nbsp</h1>
 
 <?php
 
 include 'dbconn.php';
 session_start();
 
+/* 로그인 체크 */
 if(isset($_SESSION['loginId'])) {
   $id = $_SESSION['loginId'];
   $query = "SELECT uId FROM USER WHERE loginId = '$id'";
@@ -51,39 +52,73 @@ if(isset($_SESSION['loginId'])) {
     $uId = $row['uId'];
   }
 }
-$query = "SELECT f.*, p.* FROM FRIENDS AS f INNER JOIN PROFILE AS p ON f.frId = p.uId WHERE f.uId = $uId";
+
+/* 친구 count 세기 */
+$query = "SELECT relation, count(*) AS cnt FROM FRIENDS WHERE uId=$uId GROUP BY relation";
 $result = mysqli_query($conn, $query);
 $num = mysqli_num_rows($result);
-//$row = mysqli_fetch_assoc($result);
+if($num) { //select row 있으면
+  while($row = mysqli_fetch_assoc($result)) {
+    if($row['relation'] == 1) {
+      $cnt = $row['cnt'];
+      break;
+    }
+  }
+}
+
+/* 친구목록 view 만들기 */
+$query = "CREATE VIEW friends_view AS
+SELECT f.*, p.uId AS 친구uId, p.school, p.company, p.residence, p.profile
+FROM FRIENDS AS f
+INNER JOIN PROFILE AS p
+ON f.frId = p.uId WHERE f.uId = $uId";
+$result = mysqli_query($conn, $query);
+
+/* 친구목록view와 user 테이블 join */
+$query = "SELECT v.*, u.name FROM friends_view AS v INNER JOIN USER AS u ON v.frId = u.uId";
+$result = mysqli_query($conn, $query);
+$num = mysqli_num_rows($result);
 
 if($num) { //select row 있으면
+
 ?>
         <table align='center'>
           <thead align='center'>
             <tr>
-              <td style='width:30%;'>프로필사진</td>
-              <td>친구정보</td>
-              <td>친구끊기버튼</td>
+              <td colspan='3' style='text-align:left; '><h2>친구 <?php echo "$cnt"; ?>명</h2></td>
             </tr>
           </thead>
           <tbody>
 
 <?php
   while($row = mysqli_fetch_assoc($result)) {
+    if($row['relation'] != 1) { // 친구가 아니라면
+      continue; // 현재 부분 건너뛰고 다음 친구결과로
+    }
 ?>
 
             <tr>
               <form action = 'delFriends.php' method = 'post'>
-              <td><a href = '../my.html?id=<?php $row['frId'] ?>'><?php echo "<img src = '../img/profile/".$row['profile']."' style='position:relative; width:100%;vertical-align: bottom;'>" ?></a></td>
-              <td><div style="width:100%; text-align:center;"><a href = '../my.html?id=<?php $row['uId'] ?>'><h3><?php echo $row['name'] ?></a></h3><br>
-                <?php echo $row['school']." 입학" ?><br>
-                <?php echo $row['company']." 근무" ?><br>
-                <?php echo $row['residence']." 거주" ?></div>
+              <td style='width:30%;'><a href = '../my.html?id=<?php $row['frId'] ?>'><?php echo "<img src = '../img/profile/".$row['profile']."' style='position:relative; width:100%;vertical-align: bottom;'>" ?></a></td>
+              <td style='width:55%;'><div style="width:100%; text-align:center;"><a href = '../my.html?id=<?php $row['uId'] ?>'><h3><?php echo $row['name'] ?></a></h3><br>
+                <?php if($row['school'] != "") {
+                  echo $row['school']." 입학";
+                }  ?><br>
+                <?php if($row['company'] != "") {
+                  echo $row['company']." 근무";
+                } ?><br>
+                <?php if($row['residence'] != "") {
+                  echo $row['residence']." 거주";
+                } ?></div>
                 <?php echo "<input type='hidden' name='uId' value='".$uId."'>" ?>
-                <?php echo "<input type='hidden' name='frId' value='".$row['uId']."'>" ?>
+                <?php echo "<input type='hidden' name='frId' value='".$row['frId']."'>" ?>
               </td>
               <td>
-                <input type='submit' name='submit' value='친구끊기' style='width:80%;' onclick='alert('친구끊기완료!')'>
+                <select autofocus name="select" onchange="this.form.submit()">
+                  <option selected value="친구">친구</option>
+                  <option value="친구끊기">친구끊기</option>
+                  <option value="차단">차단</option>
+                </select>
               </td>
               </form>
             </tr>
@@ -91,16 +126,26 @@ if($num) { //select row 있으면
 <?php
 
     }
-
 ?>
+
+            <tr>
+              <td colspan=3 style='text-align:right;'>
+                <a href='blockList.php'>
+                  <p>차단친구관리</p>
+                </a>
+              </td>
+            </tr>
           </tbody>
         </table>
 
 
 <?php
-
+$query = "drop view friends_view";
+$result = mysqli_query($conn, $query);
 
 } else {
+  $query = "drop view friends_view";
+  $result = mysqli_query($conn, $query);
   echo "친구가 없습니다.";
 }
 
