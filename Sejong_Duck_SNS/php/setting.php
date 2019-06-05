@@ -24,6 +24,31 @@ if($num) { //select row 있으면
   $uId = $row['uId']; //$row['uId'];
 }
 
+$select = $_POST['select'];
+if($select == '활성화') {
+  $query = "UPDATE USER SET state=0 WHERE uId = $uId";
+  if(!mysqli_query($conn, $query)) {
+    die("활성화 에러 : " .mysqli_error($conn));
+  } else {
+    echo "활성화가 완료되었습니다.";
+  }
+} else if($select == '비활성화') {
+  $query = "UPDATE USER SET state=1 WHERE uId = $uId";
+  if(!mysqli_query($conn, $query)) {
+    die("비활성화 에러 : " .mysqli_error($conn));
+  } else {
+    echo "비활성화가 완료되었습니다.";
+  }
+} else if($select == '탈퇴') {
+  header("location: logincheck.php");
+  $query = "DELETE FROM USER WHERE uId = $uId";
+  if(!mysqli_query($conn, $query)) {
+    die("탈퇴 에러 : " .mysqli_error($conn));
+  } else {
+    echo "탈퇴가 완료되었습니다.";
+  }
+}
+
 //echo "S".$_SESSION['loginId']."E";
 
 //echo history.go(-1); // 전 페이지로 돌아가기

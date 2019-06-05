@@ -16,7 +16,15 @@ if($submit == "MY") {
 } else if ($submit == "친구") {
   header("location: ../my.html?id=$frId");
 } else if ($submit == "친구추가") {
-  $query = "INSERT INTO FRIENDS (uId, frId, relation) VALUES ($uId, $frId, 1)";
+  $query = "SELECT * FROM FRIENDS WHERE uId=$uId AND frId=$frId";
+  $result = mysqli_query($conn, $query);
+  $num = mysqli_num_rows($result);
+  if($num) { //select row 있으면
+    $query = "UPDATE FRIENDS SET relation = 1 WHERE uId=$uId AND frId=$frId";
+  } else {
+    $query = "INSERT INTO FRIENDS (uId, frId, relation) VALUES ($uId, $frId, 1)";
+  }
+
   $prevPage = $_SERVER['HTTP_REFERER'];
 
   if(!mysqli_query($conn, $query)) {

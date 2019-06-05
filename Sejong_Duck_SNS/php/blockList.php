@@ -63,7 +63,10 @@ if($num) { //select row 있으면
       $cnt = $row['cnt'];
       break;
     }
+    $cnt = 0;
   }
+} else {
+  $cnt = 0;
 }
 
 /* 친구목록 view 만들기 */
@@ -85,7 +88,7 @@ if($num) { //select row 있으면
         <table align='center'>
           <thead align='center'>
             <tr>
-              <td colspan='3' style='text-align:left; '><h2>친구 <?php echo "$cnt"; ?>명</h2></td>
+              <td colspan='3' style='text-align:left; '><h2>차단 <?php echo "$cnt"; ?>명</h2></td>
             </tr>
           </thead>
           <tbody>

@@ -63,7 +63,10 @@ if($num) { //select row 있으면
       $cnt = $row['cnt'];
       break;
     }
+    $cnt = 0;
   }
+} else {
+  $cnt = 0;
 }
 
 /* 친구목록 view 만들기 */
