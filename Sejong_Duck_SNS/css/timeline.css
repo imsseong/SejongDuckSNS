@@ -1,0 +1,60 @@
+
+.timeline-post{ /*section 구역 내 타임라인을 표시하는 큰 틀 (table)*/
+  width:100%;
+  overflow-y : scroll;
+  border-collapse: collapse;
+  table-layout:fixed;
+  word-break: break-all;
+}
+.foo-text{ /*thead 부분인데 포스트 사이에 간격 주기 귀찮아서 글씨로 했습니다.*/
+  color:#ffffff;
+  text-align: right;
+}
+tbody{ /*타임라인에서 포스트를 책임지는 구역(글 마다 구분주기 위해 선이랑 그림자 추가 용도)*/
+  box-shadow: 5px 7px 5px #f2b49e;
+  border:3px solid #000000;
+}
+#timeline-name{ /*타임라인에서 이름 칸*/
+  padding:10px;
+  border-bottom: 1px solid #000000;
+}
+#timeline-image{ /*타임라인에서 이미지 칸*/
+  padding:10px;
+  overflow:hidden;
+}
+#timeline-content,#timeline-reply-area{ /*타임라인에서 내용 칸 , 댓글 출력되는 칸*/
+  padding: 10px;
+  border-bottom: 1px solid #000000;
+}
+#timeline-reply{/*타임라인에서 댓글 작성 칸*/
+  padding: 10px;
+  border-bottom: 1px dashed #000000;
+}
+#post-own-name{/*타임라인 이름 칸에 글쓴사람 이름 크게 보이게*/
+  font-weight: bold;
+  font-size: 35px;
+  margin-right: 35px;
+}
+#like-count{ /*타임라인 이름 칸에서 이름 옆에 있는 좋아요 카운트 값 글 */
+  font-weight: bold;
+  font-size:20px;
+  margin-left:10px;
+}
+#content-span{/*타임라인 이름 칸에 실질적인 포스트 내용 글씨 크기 수정하기 위해*/
+  font-size: 19px;
+}
+#reply-span{/*타임라인 댓글작성&출력 칸에 글씨 크기 수정하기 위해*/
+  font-size:14px;
+}
+.reply-form{ /*댓글 작성 form*/
+  width: 90%;
+  float:right;
+}
+img{/*이미지 포스트일 경우 이미지 크기 조절*/
+  width:auto;
+  height:320px;
+}
+.mybutton{/*자신의 글에만 보이는 update, delete 버튼*/
+  float: right;
+  margin-right: 10px;
+}

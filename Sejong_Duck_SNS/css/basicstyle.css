@@ -38,7 +38,7 @@ body{
   height:58px;
 }
 .search{
-  width:25%;
+  width:28%;
   border: 1px solid #1b5ac2;
   background: #ffffff;
   float: left;
@@ -52,10 +52,9 @@ input{
   padding: 3px;
   border: 0;
   outline: none;
-
 }
 .search-button{
-  width:55px;
+  width:58px;
   height:42px;
   border: 0;
   background-color: #e59560;
@@ -94,7 +93,6 @@ input{
 }
 .section-text{
   display: block;
-  overflow: hidden;
   width:96%;
   height:90%;
   font-size: 22px;

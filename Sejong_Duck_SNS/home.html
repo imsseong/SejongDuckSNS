@@ -4,9 +4,12 @@
 <head>
   <meta charset="utf-8">
   <title>꽥꽥이</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="css/basicstyle.css?after">
+  <link rel="stylesheet" href="css/timeline.css?after">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 </head>
-<link rel="stylesheet" href="css/basicstyle.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
 
 <body>
   <div id="page-wrapper">
@@ -15,12 +18,12 @@
         <a href="home.html"><img src="img/duck.jpg" alt="mark" class="main-mark"></a>
         <div class="search">
           <form method="post" action="php/search.php">
-            <input type="text" placeholder="검색" name="name" required>
+            <input type="text" placeholder="검색" name="name" classrequired>
             <button type="submit" class="search-button">검색</button>
           </form>
         </div>
         <div class="top-navigation">
-          <a href="php/my.php">
+          <a href="my.html">
             <p class="top-navigation-item">My</p>
           </a>
           <a href="php/logincheck.php">
@@ -32,58 +35,182 @@
 
     <div id="section-area">
       <div class="section-text">
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        ss<br>
-        tt<br>
 
+        <table class="timeline-post"><br>
+          <caption>타임 라인 - 임시 구현</caption>
+          <?php
 
-        <br><br><br><br>
+          session_start();
+
+          $conn = mysqli_connect("49.236.137.89","root","sjce-db123!@#");
+          mysqli_query($conn,"SET NAMES utf8");
+
+          mysqli_select_db($conn,"SejongDuckSNS");
+
+          error_reporting(E_ALL);
+          ini_set("display_errors",1);
+
+          $query1 = "SELECT * FROM POST_CONTENT ORDER BY pId DESC LIMIT 6";
+
+          $result1=$conn->query($query1);
+          $row_num1 = $result1->num_rows;
+
+          $query2 = "SELECT *
+          FROM USER INNER JOIN
+          (SELECT POST.uId FROM POST INNER JOIN
+          (SELECT POST_CONTENT.pId FROM POST_CONTENT ORDER BY POST_CONTENT.pId DESC LIMIT 6) AS POST_CONTENT
+          ON POST.pId = POST_CONTENT.pId) AS POSTuId
+          ON USER.uId = POSTuId.uId";
+
+          $result2 = $conn->query($query2);
+          $row_num2 = $result2->num_rows;
+
+          while($row_num1 > 0) {
+            $row1=$result1->fetch_array(MYSQLI_ASSOC);
+            $row2=$result2->fetch_array(MYSQLI_ASSOC);
+          ?>
+          <thead>
+            <tr><td colspan="2"><p class="foo-text">ㅜ</p></td></tr>
+            <tr><td colspan="2"><p class="foo-text">ㅗ</p></td></tr>
+          </thead>
+          <tbody>
+            <tr class="tr-border">
+              <td colspan="2" id="timeline-name">
+                <span id="post-own-name"><?php echo $row2['name'];?></span>
+                <?php
+                $curpId= $row1['pId'];
+
+                if($row_num1 == 6){
+                  $_SESSION['sessionpId'][0]= $row1['pId'];
+                  $_SESSION['num'][0]= $row_num1;
+                } else if($row_num1 == 5) {
+                  $_SESSION['sessionpId'][1]= $row1['pId'];
+                  $_SESSION['num'][1]= $row_num1;
+                } else if($row_num1 == 4) {
+                  $_SESSION['sessionpId'][2]= $row1['pId'];
+                  $_SESSION['num'][2]= $row_num1;
+                } else if($row_num1 == 3) {
+                  $_SESSION['sessionpId'][3]= $row1['pId'];
+                  $_SESSION['num'][3]= $row_num1;
+                } else if($row_num1 == 2) {
+                  $_SESSION['sessionpId'][4]= $row1['pId'];
+                  $_SESSION['num'][4]= $row_num1;
+                } else if($row_num1 == 1) {
+                  $_SESSION['sessionpId'][5]= $row1['pId'];
+                  $_SESSION['num'][5]= $row_num1;
+                }
+
+                if(!isset($_SESSION['name']) && empty($_SESSION['name'])) {
+                } else {
+                  //ajax 작업
+                  //현재 마지막 글에 좋아요가 들어가는 상황
+                  //echo '<a href="php/like.php"><i class="far fa-thumbs-up"></i> </a>';
+
+                  if($row_num1 == 6){
+                    echo '<a href="php/temp/like1.php"><i class="far fa-thumbs-up"></i> </a>';
+                  } else if($row_num1 == 5) {
+                    echo '<a href="php/temp/like2.php"><i class="far fa-thumbs-up"></i> </a>';
+                  } else if($row_num1 == 4) {
+                    echo '<a href="php/temp/like3.php"><i class="far fa-thumbs-up"></i> </a>';
+                  } else if($row_num1 == 3) {
+                    echo '<a href="php/temp/like4.php"><i class="far fa-thumbs-up"></i> </a>';
+                  } else if($row_num1 == 2) {
+                    echo '<a href="php/temp/like5.php"><i class="far fa-thumbs-up"></i> </a>';
+                  } else if($row_num1 == 1) {
+                    echo '<a href="php/temp/like6.php"><i class="far fa-thumbs-up"></i> </a>';
+                  }
+                }?>
+
+                <span id="like-count">좋아요 :
+                  <?php
+                  $cntquery = "SELECT likes FROM POST WHERE pId = $curpId";
+                  $cntresult = $conn->query($cntquery);
+                  $cntrow=$cntresult->fetch_array(MYSQLI_ASSOC);
+                  echo $cntrow['likes'];
+                  ?></span>
+                <?php
+                if(!isset($_SESSION['uId']) && empty($_SESSION['uId'])) {
+
+                } else {
+                if($_SESSION['uId'] === $row2['uId']) {
+                  echo '<a href="#" class="mybutton"><i class="far fa-trash-alt"></i> </a>';
+                  echo '<a href="#" class="mybutton"><i class="far fa-edit"></i> </a>';
+                }
+                else {}
+                }
+                ?>
+
+                <script type="text/javascript">
+                  /* ajax 써먹을거
+                  $(document).on('click', '.like_button', function() {
+                    var pId = $(this).data('pId');
+                    $(this).attr('disabled', 'disabled');
+
+                    $.ajax({
+                      url: "php/like.php",
+                      method: "POST",
+                      data: {
+                        pId: pId
+                      },
+                      success: function(data) {
+                        if (data == 'done') {
+                          load_stuff();
+                        }
+                      }
+                    });
+                  });
+                  */
+                </script>
+
+              </td>
+            </tr>
+            <tr class="tr-border">
+              <?php
+              if($row1['url'] == NULL) { ?>
+              <td colspan="2" id="timeline-content"><span id="content-span"><?php echo $row1['content'];?></span></td>
+              <?php
+            } else {
+              $image="http://49.236.137.89/img/upload/".$row1['url'];
+            ?>
+              <td id="timeline-content"><span id="content-span"><?php echo $row1['content'];?></span></td>
+              <td class="timeline-image"><img src="<?php echo $image;?>"></td>
+              <?php
+              }
+              ?>
+            </tr>
+            <tr class="tr-border">
+              <td colspan="2" id="timeline-reply">
+                <?php
+                if(!isset($_SESSION['name']) && empty($_SESSION['name'])) {
+                  echo '<span id="reply-span">로그인해야 댓글 작성이 가능합니다^^</span>';
+                } else {
+                  echo '<span id="reply-span">'.$_SESSION['name'].'</span> : <form action="php/reply.php" method="post" class="reply-form">
+                    <input type="text" name="reply" placeholder="댓글 입력">
+                    <button type="button" name="reply-submit">댓글작성</button>
+                  </form>';
+                } ?>
+              </td>
+            </tr>
+            <tr class="tr-border">
+              <td colspan="2" id="timeline-reply-area"><span id="reply-span"> 댓글 내용 보여지는 곳</span></td>
+            </tr>
+          </tbody>
+          <?php $row_num1--; $row_num2--;
+          }
+          ?>
+        </table>
+        <br><br><br>
       </div>
     </div>
 
     <div class="right-navigation">
-      <a href="timeline.html">
+      <a href="home.html">
         <p>타임라인</p>
       </a>
       <a href="post.html">
         <p>POST</p>
       </a>
-      <a href="php/friendsList.php">
+      <a href="php/friendsList">
         <p>친구 목록</p>
       </a>
       <a href="setting.html">
