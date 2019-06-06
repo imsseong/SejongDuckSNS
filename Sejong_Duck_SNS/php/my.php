@@ -53,6 +53,11 @@ if(isset($_SESSION['loginId'])) {
   }
 }
 
+/* url id 파라미터 받기 */
+if(isset($_GET['id'])) {
+  $uId = $_GET['id'];
+}
+
 /* 친구 count 세기 */
 $query = "SELECT relation, count(*) AS cnt FROM FRIENDS WHERE uId=$uId GROUP BY relation";
 $result = mysqli_query($conn, $query);
@@ -80,12 +85,12 @@ if($num) { //select row 있으면
 }
 
 /* 상단 my 정보 뿌리기 */
-$query = "SELECT u.uId, u.name, p.* FROM USER AS u LEFT JOIN PROFILE AS p USING(uId) WHERE uId = $uId";
+$query = "SELECT u.uId, u.name, u.loginId, p.* FROM USER AS u LEFT JOIN PROFILE AS p USING(uId) WHERE uId = $uId";
 $result = mysqli_query($conn, $query);
 $num = mysqli_num_rows($result);
 $row = mysqli_fetch_assoc($result);
 if($num) { //select row 있으면
-
+$loginId = $row['loginId']; //post부분에서 보여질 글쓴이 아이디
 ?>
 
 <table align='center'>
@@ -93,7 +98,7 @@ if($num) { //select row 있으면
     <tr>
       <td rowspan='2' id='td_photo'><?php echo "<img src = '../img/profile/".$row['profile']."' style='border-radius: 50%;'>" ?></td>
       <td><h3><?php echo "$cntP"; ?></h3><p>게시물</p></td>
-      <td><a href='friendsList.php'><h3><?php echo "$cntF"; ?></h3><p>친구</p></a></td>
+      <td><a href='friendsList.php?id=<?php echo $uId ?>'><h3><?php echo "$cntF"; ?></h3><p>친구</p></a></td>
     </tr>
     <tr>
       <td colspan='2'><a href='../setting.html'><div style='border:1px solid #808080; border-radius:10px'><h4>프로필 수정</h4></dvi></a></td>
@@ -182,19 +187,59 @@ if($num) { //select row 있으면
 
 ?>
   <div id='my2' style='display:none;'>
+    <?php mysqli_data_seek($result, 0) //인덱스 0으로?>
     <table align='center'>
     <thead align='center'>
 
 <?php
     while($row = mysqli_fetch_assoc($result)) {
 ?>
-      <tr>
-      <td>타임라인 그거 뿌리기!!!!!!!!!!!!!!11</td>
+      <tr><!-- my페이지, post 글쓴이 -->
+        <td>
+          <b style='float:left;'><?php echo $loginId ?></b>
+        </td>
       </tr>
+      <?php
+      if($row['type'] == 1) { // 이미지 포스팅이면
+
+      ?>
+      <tr><!-- post 이미지 -->
+        <td>
+          <?php echo "<img src = '../img/upload/".$row['url']."' style='width:100%; height:300px;'>" ?>
+        </td>
+      </tr>
+      <?php
+      }
+      ?>
+
+      <tr><!-- 좋아요버튼, 댓글창버튼 -->
+        <td>
+          <div style="float:left; text-align:left;">
+          <input type='button' id='btn_like' value='좋아요이미지넣기' onclick='like();' style='width:30%;'/>
+          <input type='button' id='btn_reply' value='댓글창이미지넣기' onclick='reply("<?=$row['pId']?>");' style='width:30%;'/>
+          </div>
+        </td>
+      </tr>
+      <tr><!-- 좋아요 수 -->
+        <td>
+          <b style='float:left; text-align:left; margin-left:0;'><?php echo $row['likes'] ?> 명이 좋아합니다.</b>
+        </td>
+      </tr>
+      <tr><!-- post 내용 -->
+        <td style='text-align:left;'>
+          <?php echo $row['content'] ?>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <br>
+        </td>
+      </tr><br>
 
 <?php
     }
 ?>
+
     </thead>
     </table>
   </div>
@@ -245,4 +290,14 @@ function change2() {
   document.getElementById("my1").style.display="none";
   document.getElementById("my2").style.display="block";
 }
+
+function like() {
+
+}
+
+function reply(pId) {
+
+
+}
+
 </script>

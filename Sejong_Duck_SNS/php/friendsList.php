@@ -43,14 +43,20 @@ session_start();
 /* 로그인 체크 */
 if(isset($_SESSION['loginId'])) {
   $id = $_SESSION['loginId'];
-  $query = "SELECT uId FROM USER WHERE loginId = '$id'";
+  $query = "SELECT uId, loginId FROM USER WHERE loginId = '$id'";
   $result = mysqli_query($conn, $query);
   $num = mysqli_num_rows($result);
   $row = mysqli_fetch_assoc($result);
 
   if($num) { //select row 있으면
+    $temp = $row['uId']; //로그인된 회원의 친구목록인지 확인을 위한 임시 변수
     $uId = $row['uId'];
   }
+}
+
+/* url id 파라미터 받기 */
+if(isset($_GET['id'])) {
+  $uId = $_GET['id'];
 }
 
 /* 친구 count 세기 */
@@ -102,8 +108,8 @@ if($num) { //select row 있으면
 
             <tr>
               <form action = 'delFriends.php' method = 'post'>
-              <td style='width:30%;'><a href = 'my.php?id=<?php $row['frId'] ?>'><?php echo "<img src = '../img/profile/".$row['profile']."' style='position:relative; width:100%;vertical-align: bottom;'>" ?></a></td>
-              <td style='width:55%;'><div style="width:100%; text-align:center;"><a href = 'my.php?id=<?php $row['uId'] ?>'><h3><?php echo $row['name'] ?></a></h3><br>
+              <td style='width:30%;'><a href = 'my.php?id=<?php echo $row['frId'] ?>'><?php echo "<img src = '../img/profile/".$row['profile']."' style='position:relative; width:100%;vertical-align: bottom;'>" ?></a></td>
+              <td style='width:55%;'><div style="width:100%; text-align:center;"><a href = 'my.php?id=<?php echo $row['frId'] ?>'><h3><?php echo $row['name'] ?></a></h3><br>
                 <?php if($row['school'] != "") {
                   echo $row['school']." 입학";
                 }  ?><br>
@@ -117,11 +123,21 @@ if($num) { //select row 있으면
                 <?php echo "<input type='hidden' name='frId' value='".$row['frId']."'>" ?>
               </td>
               <td>
+                <?php
+                if($uId == $temp) {
+                ?>
                 <select autofocus name="select" onchange="this.form.submit()">
                   <option selected value="친구">친구</option>
                   <option value="친구끊기">친구끊기</option>
                   <option value="차단">차단</option>
                 </select>
+                <?php
+              } else {
+                ?>
+                <p>친구</p>
+                <?php
+              }
+                ?>
               </td>
               </form>
             </tr>
@@ -133,9 +149,15 @@ if($num) { //select row 있으면
 
             <tr>
               <td colspan=3 style='text-align:right;'>
+                <?php
+                if($uId == $temp) {
+                ?>
                 <a href='blockList.php'>
                   <p>차단친구관리</p>
                 </a>
+                <?php
+                }
+                ?>
               </td>
             </tr>
           </tbody>

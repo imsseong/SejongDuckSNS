@@ -51,21 +51,17 @@ if(isset($_SESSION['loginId'])) {
   }
 }
 
+/* 검색된 name으로 view 생성 */
 $name = $_POST['name'];
-$query = "CREATE VIEW search_view AS
-SELECT u.name, p.* FROM USER AS u
+$query = "CREATE VIEW search_view AS SELECT u.name, p.*
+FROM USER AS u
 INNER JOIN PROFILE AS p USING (uId) WHERE u.name LIKE '%$name%'";
-
-
-//$query = "SELECT u.name, p.* FROM USER AS u INNER JOIN PROFILE AS p USING (uId) WHERE u.name LIKE '%$name%'";
-//$query = "SELECT uId, loginId, name  FROM USER WHERE name like '%$name%'";
 $result = mysqli_query($conn, $query);
 
-$query = "SELECT v.*, f.uId AS 친구uId, f.frId, f.relation FROM search_view AS v
-LEFT JOIN FRIENDS AS f ON v.uId=f.frId";
+/* 검색된 name 포함 view와 FRIENDS left join */
+$query = "SELECT v.*, f.uId AS 친구uId, f.frId, f.relation FROM search_view AS v LEFT JOIN FRIENDS AS f ON v.uId=f.frId";
 $result = mysqli_query($conn, $query);
 $num = mysqli_num_rows($result);
-//$row = mysqli_fetch_assoc($result);
 
 if($num) { //select row 있으면
 ?>
@@ -91,8 +87,8 @@ if($num) { //select row 있으면
 
             <tr>
               <form action = 'makeFriends.php' method = 'post'>
-              <td><a href = 'my.php?id=<?php $row['uId'] ?>'><?php echo "<img src = '../img/profile/".$row['profile']."' style='position:relative; width:100%;vertical-align: bottom;'>" ?></a></td>
-              <td><div style="width:100%; text-align:center;"><a href = 'my.php?id=<?php $row['uId'] ?>'><h3><?php echo $row['name'] ?></a></h3><br>
+              <td><a href = 'my.php?id=<?php echo $row['uId'] ?>'><?php echo "<img src = '../img/profile/".$row['profile']."' style='position:relative; width:100%;vertical-align: bottom;'>" ?></a></td>
+              <td><div style="width:100%; text-align:center;"><a href = 'my.php?id=<?php echo $row['uId'] ?>'><h3><?php echo $row['name'] ?></a></h3><br>
                 <?php if($row['school'] != "") {
                   echo $row['school']." 입학";
                 }  ?><br>
