@@ -12,9 +12,9 @@ $uId = $_POST['uId'];
 $frId = $_POST['frId'];
 $submit = $_POST['submit'];
 if($submit == "MY") {
-    header("location: ../my.html?id=$uId");
+    header("location: my.php?id=$uId");
 } else if ($submit == "친구") {
-  header("location: ../my.html?id=$frId");
+  header("location: my.php?id=$frId");
 } else if ($submit == "친구추가") {
   $query = "SELECT * FROM FRIENDS WHERE uId=$uId AND frId=$frId";
   $result = mysqli_query($conn, $query);

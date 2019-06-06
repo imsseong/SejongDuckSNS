@@ -80,7 +80,7 @@ if($num) { //select row 있으면
 }
 
 /* 상단 my 정보 뿌리기 */
-$query = "SELECT u.uId, u.name, p.* FROM USER AS u INNER JOIN PROFILE AS p USING(uId) WHERE uId = $uId";
+$query = "SELECT u.uId, u.name, p.* FROM USER AS u LEFT JOIN PROFILE AS p USING(uId) WHERE uId = $uId";
 $result = mysqli_query($conn, $query);
 $num = mysqli_num_rows($result);
 $row = mysqli_fetch_assoc($result);

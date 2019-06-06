@@ -21,7 +21,7 @@
           </form>
         </div>
         <div class='top-navigation'>
-          <a href='../my.html'>
+          <a href='my.php'>
             <p class='top-navigation-item'>My</p>
           </a>
           <a href='logincheck.php'>
@@ -102,8 +102,8 @@ if($num) { //select row 있으면
 
             <tr>
               <form action = 'delFriends.php' method = 'post'>
-              <td style='width:30%;'><a href = '../my.html?id=<?php $row['frId'] ?>'><?php echo "<img src = '../img/profile/".$row['profile']."' style='position:relative; width:100%;vertical-align: bottom;'>" ?></a></td>
-              <td style='width:55%;'><div style="width:100%; text-align:center;"><a href = '../my.html?id=<?php $row['uId'] ?>'><h3><?php echo $row['name'] ?></a></h3><br>
+              <td style='width:30%;'><a href = 'my.php?id=<?php $row['frId'] ?>'><?php echo "<img src = '../img/profile/".$row['profile']."' style='position:relative; width:100%;vertical-align: bottom;'>" ?></a></td>
+              <td style='width:55%;'><div style="width:100%; text-align:center;"><a href = 'my.php?id=<?php $row['uId'] ?>'><h3><?php echo $row['name'] ?></a></h3><br>
                 <?php if($row['school'] != "") {
                   echo $row['school']." 입학";
                 }  ?><br>
