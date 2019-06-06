@@ -26,6 +26,12 @@ if(!mysqli_query($conn, $insert)) {
 die("가입 에러 : " .mysqli_error($conn));
 }
 else {
+  $query = "SELECT uId from USER WHERE loginId = '$loginId'";
+  $result = mysqli_query($conn, $query);
+  $row = mysqli_fetch_assoc($result);
+  $uId = $row['uId'];
+  $query = "INSERT INTO PROFILE VALUES ($uId, '', '', '', 'duck.jpg')";
+  $result = mysqli_query($conn, $query);
 echo "<script>alert('회원가입을 축하드립니다~ 짝짝짝~');</script>";
 echo "<script>location.replace('../login.html');</script>";
 }
