@@ -32,7 +32,7 @@
 
     <div id='section-area'>
       <div class='section-text' style='overflow-y:scroll;'>
-        <h1>nbsp</h1>
+        <br>
 
 <?php
 
@@ -85,6 +85,7 @@ if($num) { //select row 있으면
       if($row['relation'] == 2) { //차단한 친구를 검색한 경우
         continue; // 현재 부분 건너뛰고 다음 검색결과로
       }
+    }
 
 ?>
 
@@ -125,8 +126,6 @@ if($num) { //select row 있으면
             </tr>
 
 <?php
-
-    }
 }
 ?>
           </tbody>
