@@ -30,8 +30,8 @@ if($submit == "MY") {
   if(!mysqli_query($conn, $query)) {
     die("친구 추가 에러 : " .mysqli_error($conn));
   } else {
-    echo "친구 추가가 완료되었습니다.";
-    header("location: $prevPage");
+    echo "<script>alert('친구 추가가 완료되었습니다~~ 친구 페이지로 이동합니다!!!');</script>";
+    echo "<script>location.replace('my.php?id=$frId');</script>";
   }
 }
 

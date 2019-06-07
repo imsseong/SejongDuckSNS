@@ -183,7 +183,7 @@ mysqli_close($conn);
     </div>
 
     <div class='right-navigation'>
-      <a href='../timeline.html'>
+      <a href='../home.html'>
         <p>타임라인</p>
       </a>
       <a href='../post.html'>

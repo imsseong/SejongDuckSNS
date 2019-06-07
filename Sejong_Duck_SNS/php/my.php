@@ -8,6 +8,7 @@
 <link rel='stylesheet' href='../css/search.css'>
 <link rel='stylesheet' href='../css/my.css'>
 <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.2/css/all.css' integrity='sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay' crossorigin='anonymous'>
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.0.min.js"></script>
 
 <body>
   <?php include("check.php")?>
@@ -34,7 +35,7 @@
 
     <div id='section-area'>
       <div class='section-text' style='overflow-y:scroll;'>
-        <h1>마이페이지 만들거야야야냠얌냐</h1>
+        <br>
 
 <?php
 include 'dbconn.php';
@@ -133,10 +134,6 @@ $postingType = 0;
     <tr>
       <td style='width:50%;'><input type='button' id='btn_1' value='사진만' onclick='change1();'/></td>
       <td><input type='button' id='btn_2' value='타임라인처럼' onclick='change2();'/></td>
-
-      <script type="text/javascript" src="http://code.jquery.com/jquery-3.2.0.min.js"></script>
-
-
     </tr>
   </thead>
 </table>
@@ -255,7 +252,7 @@ mysqli_close($conn);
     </div>
 
     <div class='right-navigation'>
-      <a href='../timeline.html'>
+      <a href='../home.html'>
         <p>타임라인</p>
       </a>
       <a href='../post.html'>
@@ -281,6 +278,7 @@ mysqli_close($conn);
 </html>
 
 <script type="text/javascript">
+
 function change1() {
   document.getElementById("my1").style.display="block";
   document.getElementById("my2").style.display="none";
@@ -291,13 +289,5 @@ function change2() {
   document.getElementById("my2").style.display="block";
 }
 
-function like() {
-
-}
-
-function reply(pId) {
-
-
-}
 
 </script>
