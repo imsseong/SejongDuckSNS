@@ -40,6 +40,16 @@ tbody{ /*타임라인에서 포스트를 책임지는 구역(글 마다 구분�
   font-size:20px;
   margin-left:10px;
 }
+.like-form{
+  display: inline-block;
+}
+.like-button{
+  background: url("../img/like.jpg") no-repeat;
+  border:none;
+  width:32px;
+  height:32px;
+  cursor:pointer;
+}
 #content-span{/*타임라인 이름 칸에 실질적인 포스트 내용 글씨 크기 수정하기 위해*/
   font-size: 19px;
 }
@@ -51,8 +61,8 @@ tbody{ /*타임라인에서 포스트를 책임지는 구역(글 마다 구분�
   float:right;
 }
 img{/*이미지 포스트일 경우 이미지 크기 조절*/
-  width:auto;
-  height:320px;
+  width:480px;
+  height:auto;
 }
 .mybutton{/*자신의 글에만 보이는 update, delete 버튼*/
   float: right;
