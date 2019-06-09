@@ -141,7 +141,7 @@ $postingType = 0;
 <?php
 
 /* post 정보 뿌리기 */
-$query = "SELECT p.uId, p.type, p.views, p.likes, c.* FROM POST AS p
+$query = "SELECT p.uId, p.type, p.likes, c.* FROM POST AS p
 INNER JOIN POST_CONTENT AS c USING(pId) WHERE p.uId = $uId";
 $result = mysqli_query($conn, $query);
 $num = mysqli_num_rows($result);
@@ -154,45 +154,48 @@ if($num) { //select row 있으면
       <thead align='center'>
 
 
-<?php
+      <?php
       for($i = 0; $i < ceil($num/3); $i++) {
         $cnt = 0;
-?>
+      ?>
         <tr>
-<?php
+      <?php
         while($row = mysqli_fetch_assoc($result)) {
-?>
+          if($row['type'] == 1) {
+      ?>
 
         <td id='td_content'><?php echo "<img src = '../img/upload/".$row['url']."' >" ?></td>
-<?php
+      <?php
           $cnt ++;
           if($cnt == 3) {
             break;
           }
+        } else {
+          continue;
         }
-?>
-      </tr>
-<?php
       }
-?>
+      ?>
+      </tr>
+      <?php
+      }
+      ?>
 
 
       </thead>
       </table>
     </div>
-<?php
 
-?>
   <div id='my2' style='display:none;'>
     <?php mysqli_data_seek($result, 0) //인덱스 0으로?>
     <table align='center'>
     <thead align='center'>
 
-<?php
+    <?php
     while($row = mysqli_fetch_assoc($result)) {
-?>
+      $pId = $row['pId']; //REPLY에서 댓글 내용 select 할 때 필요한 변수
+    ?>
       <tr><!-- my페이지, post 글쓴이 -->
-        <td>
+        <td style='border-top:2px solid teal;'>
           <b style='float:left;'><?php echo $loginId ?></b>
         </td>
       </tr>
@@ -211,10 +214,14 @@ if($num) { //select row 있으면
 
       <tr><!-- 좋아요버튼, 댓글창버튼 -->
         <td>
-          <div style="float:left; text-align:left;">
-          <input type='button' id='btn_like' value='좋아요이미지넣기' onclick='like();' style='width:30%;'/>
-          <input type='button' id='btn_reply' value='댓글창이미지넣기' onclick='reply("<?=$row['pId']?>");' style='width:30%;'/>
-          </div>
+          <form class="like-form" action="like.php" method="post" style="display:inline; float:left; width:40px;">
+            <input type="hidden" name="postId" value="<?php echo $row['pId'];?>">
+            <input type="submit" class="like-button" value="" style='text-align:left; background: url("../img/like.jpg") no-repeat; width:32px; height:32px' >
+          </form>
+          <form action="reply.php" method="post" style="display:inline; float:left; width:40px;">
+            <input type="hidden" name="postId" value="<?php echo $row['pId'];?>">
+            <input id="reply_id" type="submit" value="" style='text-align:left; background: url("../img/reply.jpg") no-repeat; width:32px; height:32px' >
+          </form>
         </td>
       </tr>
       <tr><!-- 좋아요 수 -->
@@ -229,25 +236,44 @@ if($num) { //select row 있으면
       </tr>
       <tr>
         <td>
-          <br>
-        </td>
-      </tr><br>
+          <hr/>
+          <?php
 
-<?php
+          $select = "SELECT r.*, u.loginId FROM REPLY AS r INNER JOIN USER as u USING (uId) WHERE pId=$pId";
+          $res = mysqli_query($conn, $select);
+          $nums = mysqli_num_rows($res);
+
+          if($nums) { //select row 있으면
+
+            while($rows = mysqli_fetch_assoc($res)) {
+              if($rows['reple'] == "") {
+                continue;
+              }else {
+              echo "<div style='text-align:left;'><b>".$rows['loginId']."</b> ".$rows['reple']."</div>";
+              }
+            }
+          } else {
+            continue;
+          }
+
+
+          ?>
+
+        </td>
+      </tr>
+
+    <?php
     }
-?>
+    ?>
 
     </thead>
     </table>
   </div>
 <?php
 }
-?>
-
-<?php
-
 mysqli_close($conn);
 ?>
+
       </div>
     </div>
 
