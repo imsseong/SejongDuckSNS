@@ -8,3 +8,9 @@
   width: auto;
   height: auto;
 }
+#caption {
+  text-align: center;
+  font-size: 36px;
+  font-weight: bold;
+  text-shadow: 3px 3px 0px #f7a874, 5px 5px 0px #f2bd9b, 7px 7px 0px #f9d5bd;
+}

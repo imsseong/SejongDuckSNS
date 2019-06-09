@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>꽥꽥이</title>
+</head>
+<link rel="stylesheet" href="css/basicstyle.css">
+<link rel="stylesheet" href="css/post.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+<body>
+  <?php include("php/check.php"); ?>
+  <div id="page-wrapper">
+    <header id="main-header">
+      <div class="header-item">
+        <a href="home.html"><img src="img/duck.jpg" alt="mark" class="main-mark"></a>
+        <div class="search">
+          <form method="post" action="php/search.php">
+            <input type="text" placeholder="검색" name="name" required>
+            <button type="submit" class="search-button">검색</button>
+          </form>
+        </div>
+        <div class="top-navigation">
+          <a href="php/my.php">
+            <p class="top-navigation-item">My</p>
+          </a>
+          <a href="php/logincheck.php">
+            <p class="top-navigation-item">Log in/out</p>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div id="section-area">
+      <div class="section-text">
+        <?php
+        session_start();
+
+        $conn = mysqli_connect("49.236.137.89","root","sjce-db123!@#");
+        mysqli_query($conn,"SET NAMES utf8");
+
+        mysqli_select_db($conn,"SejongDuckSNS");
+
+        $curpId = $_POST['postId'];
+
+        $selectquery = "SELECT * FROM POST_CONTENT WHERE pId = $curpId";
+
+        $result=$conn->query($selectquery);
+        $row_num = $result->num_rows;
+        $row=$result->fetch_array(MYSQLI_ASSOC);
+
+        ?>
+        <br>
+        <p id="caption">글 수정하기 - 내용만 수정할 수 있습니다!!</p>
+
+        <br>
+        <br>
+        <br>
+
+        <p>글을 입력해주새요</p><br>
+        <form method="post" action="php/textpost.php">
+          <input type="hidden" name="checkmodify" value="<?php echo $curpId;?>">
+          <textarea name="message1" rows="8" cols="80"><?php echo $row['content'];?></textarea>
+          <button type="submit" name="button">수정하기</button>
+          <button type="reset" name="button">다시작성</button>
+        </form>
+
+      </div>
+    </div>
+
+    <div class="right-navigation">
+      <a href="home.html">
+        <p>타임라인</p>
+      </a>
+      <a href="post.html">
+        <p>POST</p>
+      </a>
+      <a href="php/friendsList.php">
+        <p>친구 목록</p>
+      </a>
+      <a href="setting.html">
+        <p>설정</p>
+      </a>
+    </div>
+
+
+
+    <footer id="main-footer">
+      here is footer <br>
+    </footer>
+  </div>
+</body>
+
+</html>
