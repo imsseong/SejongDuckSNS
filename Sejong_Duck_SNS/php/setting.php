@@ -41,19 +41,30 @@ if($select == '활성화') {
   }
 } else if($select == '탈퇴') {
   //header("location: logincheck.php");
-  $query = "DELETE FROM USER WHERE uId = $uId";
-  if(!mysqli_query($conn, $query)) {
-    die("탈퇴 에러 : " .mysqli_error($conn));
-  } else {
-    $query = "DELETE U, P, PC, L, R FROM USER U
+  //$query = "DELETE FROM USER WHERE uId = $uId";\
+  $selectquery = "SELECT * FROM SejongDuckSNS.LIKE WHERE uId = $uId";
+
+  if(mysqli_query($conn, $selectquery)) {
+    $result2 = $conn->query($selectquery);
+    $row_num = $result2->num_rows;
+
+    while($row_num > 0) {
+      $row2=$result2->fetch_array(MYSQLI_ASSOC);
+      $curpId = $row2['pId'];
+      $updatequery = "UPDATE POST SET likes = likes - 1 WHERE pId = $curpId";
+      mysqli_query($conn, $updatequery);
+      $row_num--;
+    }
+
+    $deletequery = "DELETE U, P, PC, L, R FROM USER U
     LEFT JOIN POST P ON U.uId = P.uId
     LEFT JOIN SejongDuckSNS.LIKE L ON U.uId = L.uId
     LEFT JOIN REPLY R ON U.uId = R.uId
     LEFT JOIN POST_CONTENT PC ON P.pId = PC.pId
     WHERE U.uId = $uId";
 
+    if(mysqli_query($conn, $deletequery)){
 
-    if(mysqli_query($conn, $query)){
       $res=session_destroy();
       echo "<script>alert('탈퇴 성공!');</script>";
       echo "<script>location.replace('../home.html');</script>";
@@ -109,7 +120,7 @@ if(!empty($_POST["password"])) {
   }
 }
 
-//echo "<script>location.replace('../home.html');</script>";
+echo "<script>location.replace('../home.html');</script>";
 
 mysqli_close($conn);
 
