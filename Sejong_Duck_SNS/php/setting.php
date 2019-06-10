@@ -21,7 +21,7 @@ $row = mysqli_fetch_assoc($result);
 //$row = mysqli_fetch_array($result);
 
 if($num) { //select row 있으면
-  $uId = $row['uId']; //$row['uId'];
+  $uId = (int)$row['uId']; //$row['uId'];
 }
 
 $select = $_POST['select'];
@@ -40,12 +40,24 @@ if($select == '활성화') {
     echo "비활성화가 완료되었습니다.";
   }
 } else if($select == '탈퇴') {
-  header("location: logincheck.php");
+  //header("location: logincheck.php");
   $query = "DELETE FROM USER WHERE uId = $uId";
   if(!mysqli_query($conn, $query)) {
     die("탈퇴 에러 : " .mysqli_error($conn));
   } else {
-    echo "탈퇴가 완료되었습니다.";
+    $query = "DELETE U, P, PC, L, R FROM USER U
+    LEFT JOIN POST P ON U.uId = P.uId
+    LEFT JOIN SejongDuckSNS.LIKE L ON U.uId = L.uId
+    LEFT JOIN REPLY R ON U.uId = R.uId
+    LEFT JOIN POST_CONTENT PC ON P.pId = PC.pId
+    WHERE U.uId = $uId";
+
+
+    if(mysqli_query($conn, $query)){
+      $res=session_destroy();
+      echo "<script>alert('탈퇴 성공!');</script>";
+      echo "<script>location.replace('../home.html');</script>";
+    }
   }
 }
 
@@ -97,7 +109,7 @@ if(!empty($_POST["password"])) {
   }
 }
 
-echo "<script>location.replace('../home.html');</script>";
+//echo "<script>location.replace('../home.html');</script>";
 
 mysqli_close($conn);
 
