@@ -216,7 +216,7 @@ if($num) { //select row 있으면
       ?>
       <tr><!-- post 이미지 -->
         <td>
-          <?php echo "<img src = '../img/upload/".$row['url']."' style='width:70%; height:auto;'>" ?>
+          <?php echo "<img src = '../img/upload/".$row['url']."' style='width:50%; height:auto;'>" ?>
         </td>
       </tr>
       <?php
