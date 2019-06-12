@@ -26,10 +26,34 @@ img {
 }
 
 #td_content {
+  border:1px solid gray;
   width: 33.3%;
   height: 200px;
 }
 #td_content  img {
-  width: 100%;
+  width: 33%;
   height: auto;
+}
+
+#mini_profile {
+   width:40px;
+   height:40px;
+   border-radius: 50%;
+}
+.edit-form{
+float:right;
+}
+.modify-button{
+  background: url("../img/edit.jpg") no-repeat;
+  border:none;
+  width:32px;
+  height:32px;
+  cursor:pointer;
+}
+.delete-button{
+  background: url("../img/delete.jpg") no-repeat;
+  border:none;
+  width:32px;
+  height:32px;
+  cursor:pointer;
 }
