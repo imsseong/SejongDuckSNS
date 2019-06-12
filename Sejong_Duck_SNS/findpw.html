@@ -33,36 +33,28 @@
 
     <div id="section-area">
       <div class="section-text">
-        <form method="post" action="php/login.php">
+        <form method="post" action="php/findpw.php">
           <table align="center" border="0" cellspacing="0" width="300">
+            <tr>
+              <td class="login-text">이름</td>
+              <td width="130" colspan="1">
+                <input type="text" name="name" class="inph" required>
+              </td>
+              <td rowspan="2" align="center" width="100">
+                <button type="submit" id="btn">비밀번호 찾기</button>
+              </td>
+            </tr>
             <tr>
               <td class="login-text">아이디</td>
               <td width="130" colspan="1">
-                <input type="text" name="userid" class="inph" required>
-              </td>
-              <td rowspan="2" align="center" width="100">
-                <button type="submit" id="btn">로그인</button>
+                <input type="text" name="id" class="inph" required>
               </td>
             </tr>
             <tr>
-              <td class="login-text">패스워드</td>
-              <td width="130" colspan="1">
-                <input type="password" name="userpw" class="inph" required>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="3" align="center" class="mem">
-                <a href="member.html">회원가입 하시겠습니까?</a>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="3" align="center" class="mem">
-                <a href="findid.html">아이디 찾기</a>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="3" align="center" class="mem">
-                <a href="findpw.html">비밀번호 찾기</a>
+              <td class="login-text">이메일</td>
+              <td><input type="text" name="email" class="inph" required>@<select name="emaddress">
+                  <option value="naver.com">naver.com</option>
+                  <option value="gmail.com">gmail.com</option>
               </td>
             </tr>
           </table>
