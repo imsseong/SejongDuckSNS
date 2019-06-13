@@ -10,8 +10,11 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
 <body>
+  <!--로그인 상태인지 확인하기 위한 include-->
   <?php include("php/check.php"); ?>
   <div id="page-wrapper">
+
+    <!--상단바 구역 시작-->
     <header id="main-header">
       <div class="header-item">
         <a href="home.html"><img src="img/duck.jpg" alt="mark" class="main-mark"></a>
@@ -31,6 +34,7 @@
         </div>
       </div>
     </header>
+    <!--상단바 구역 끝-->
 
     <div id="section-area">
       <div class="section-text">
@@ -45,11 +49,12 @@
         <br>
         <br>
 
+        <!--작성 폼 구역 시작-->
         <div id="textPost" style="display:none">
           <p>글을 입력해주새요</p><br>
           <form method="post" action="php/textpost.php">
             <textarea name="message1" rows="8" cols="80" placeholder="내용을 입력하세요."></textarea>
-            <button type="summit" name="button">작성하기</button>
+            <button type="submit" name="button">작성하기</button>
             <button type="reset" name="button">다시작성</button>
           </form>
 
@@ -59,9 +64,10 @@
           <form method="post" action="php/imagepost.php" enctype="multipart/form-data">
             <textarea name="message2" rows="8" cols="80" placeholder="내용을 입력하세요."></textarea>
             <input type="file" name="upload_image" accept="image/*">
-            <button type="summit" name="button">업로드 하기</button>
+            <button type="submit" name="button">업로드 하기</button>
           </form>
         </div>
+        <!--작성 폼 구역 끝-->
 
         <script>
           function radioOnOff(id) {
@@ -78,9 +84,10 @@
       </div>
     </div>
 
+<!--우측 메뉴 구역 시작-->
     <div class="right-navigation">
       <a href="home.html">
-        <p>타임라인</p>
+        <p>홈</p>
       </a>
       <a href="post.html">
         <p>POST</p>
@@ -92,13 +99,14 @@
         <p>설정</p>
       </a>
     </div>
+    <!--우측 메뉴 구역 끝-->
 
 
-
+    <!--하단  footer 구역 시작-->
     <footer id="main-footer">
-      here is footer <br>
+      copyright 2019. 홍성임, 이호진. All rights reserved<br>
     </footer>
-
+    <!--하단  footer 구역 끝-->
   </div>
 </body>
 

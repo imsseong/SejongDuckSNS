@@ -138,6 +138,7 @@
 
                 $minusquery = "SELECT COUNT(L.uId) AS MINUS FROM SejongDuckSNS.LIKE AS L INNER JOIN
                 (SELECT uId FROM USER WHERE state = 1) AS U ON L.uId = U.uId WHERE L.pId = $curpId";
+
                 $minusresult = $conn->query($minusquery);
                 $minusrow=$minusresult->fetch_array(MYSQLI_ASSOC);
 
