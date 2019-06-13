@@ -35,19 +35,53 @@
       <div class="section-text">
         <br><br><br><br>
         <form action = "php/setting.php" method = "post" enctype="multipart/form-data" >
+          <?php
+
+          include 'php/dbconn.php';
+          session_start();
+
+          /* 로그인한 회원 번호 찾기 */
+          if(isset($_SESSION['loginId'])) {
+            $id = $_SESSION['loginId'];
+            $query = "SELECT uId FROM USER WHERE loginId = '$id'";
+            $result = mysqli_query($conn, $query);
+            $num = mysqli_num_rows($result);
+            $row = mysqli_fetch_assoc($result);
+            if($num) { //select row 있으면
+              $uId = $row['uId'];
+            }
+          }
+
+          /* 로그인한 회원 프로필 정보 select */
+          $query = "SELECT u.loginId, p.* FROM USER u LEFT JOIN PROFILE p USING (uId) where uId=$uId";
+          $result = mysqli_query($conn, $query);
+          $num = mysqli_num_rows($result);
+          $row = mysqli_fetch_assoc($result);
+          if($num) {
+            $loginId = $row['loginId'];
+            $schoo = $row['school'];
+            $company = $row['company'];
+            $residence = $row['residence'];
+            $profile = $row['profile'];
+          }
+          if($profile == "") {
+            $profile = "duck.jpg";
+          }
+
+          ?>
           <div class="wrapper">
-            <div><img src="./img/duck.jpg" style="width:100px; height:50px;float:right;"></div>
-            <div><input type="text" name="userId" class="box"></div>
+            <div><img src="./img/profile/<?php echo $profile; ?>" style="width:100px; height:100px;float:right; border-radius:50%;"></div>
+            <div><input type="text" name="userId" class="box" value="<?php echo $loginId;?>"></div>
             <div></div>
             <div><input type="file" name="profile"></div>
             <div><label for="password">비밀번호 : </label></div>
-            <div><input type="password" name="password" class="box"></div>
+            <div><input type="password" name="password" class="box" required></div>
             <div><label for="school">학 교 : </label></div>
-            <div><input type="text" name="school" class="box"></div>
+            <div><input type="text" name="school" class="box" value="<?php echo $schoo; ?>"></div>
             <div><label for="company">회 사 : </label></div>
-            <div><input type="text" name="company" class="box"></div>
+            <div><input type="text" name="company" class="box" value="<?php echo $company; ?>"></div>
             <div><label for="residence">거 주 지 : </label></div>
-            <div><input type="text" name="residence" class="box" ></div><br>
+            <div><input type="text" name="residence" class="box" value="<?php echo $residence; ?>"></div><br>
             <div><select name="select">
               <option selected value="활성화">활성화</option>
               <option value="비활성화">비활성화</option>
@@ -78,7 +112,7 @@
 
 
     <footer id="main-footer">
-      here is footer <br>
+      copyright 2019. 홍성임, 이호진. All rights reserved<br>
     </footer>
 
   </div>

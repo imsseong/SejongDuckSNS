@@ -16,7 +16,6 @@ if($row_num == 0){
   exit;
 } else {
   $row=$result->fetch_array(MYSQLI_ASSOC);
-  $password = base64_decode($row['password']);
 
   echo "<script>alert('$username 님의 비밀번호는 $password 입니다');</script>";
   echo "<script>location.replace('../login.html');</script>";

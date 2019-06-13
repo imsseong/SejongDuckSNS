@@ -1,19 +1,20 @@
 <?php
+//테스트해봐야함
+//error_reporting(E_ALL);
+//ini_set("display_errors",1);
 
 include "db.php";
 
 $loginId=$_POST['loginId'];
 $email=$_POST['email'].'@'.$_POST['emaddress'];
 $password=$_POST['password'];
-include "password.php";
-$hash = password_hash($password,PASSWORD_DEFAULT);
 $name=$_POST['name'];
 $joinDate=date("Y-m-d");
 
 $select = "SELECT * FROM USER WHERE loginId = '$loginId'";
 $result=$conn->query($select);
 $row_num = $result->num_rows;
-if($result > 0){
+if($row_num > 0){
   echo "<script>alert('중복된 아이디가 존재합니다.');</script>";
   echo '<script>history.back();</script>';
   exit;
@@ -21,7 +22,7 @@ if($result > 0){
 
 $insert = "INSERT INTO
 USER(loginId,email,password,name,joinDate,state)
-VALUES ('$loginId','$email','$hash','$name','$joinDate',0)";
+VALUES ('$loginId','$email','$password','$name','$joinDate',0)";
 
 if(!mysqli_query($conn, $insert)) {
 die("가입 에러 : " .mysqli_error($conn));

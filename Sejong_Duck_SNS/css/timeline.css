@@ -79,8 +79,9 @@ tbody{ /*타임라인에서 포스트를 책임지는 구역(글 마다 구분�
   float:right;
 }
 img{/*이미지 포스트일 경우 이미지 크기 조절*/
-  width:480px;
+  width:420px;
   height:auto;
+  float:right;
 }
 .mybutton{/*자신의 글에만 보이는 update, delete 버튼*/
   float: right;

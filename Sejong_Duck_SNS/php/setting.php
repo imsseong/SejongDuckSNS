@@ -7,6 +7,7 @@ ini_set("display_errors",1);
 
 session_start();
 
+/* 로그인 체크 */
 if(!isset($_SESSION['loginId'])) {
   header("location: ../login.html");
   echo "로그인이 필요합니다";
@@ -21,27 +22,28 @@ $row = mysqli_fetch_assoc($result);
 //$row = mysqli_fetch_array($result);
 
 if($num) { //select row 있으면
-  $uId = (int)$row['uId']; //$row['uId'];
+  $uId = $row['uId']; //$row['uId'];
 }
 
+/* 회원 상태 변경 */
 $select = $_POST['select'];
-if($select == '활성화') {
+if($select == '활성화') { //state=0 활성화``
   $query = "UPDATE USER SET state=0 WHERE uId = $uId";
   if(!mysqli_query($conn, $query)) {
     die("활성화 에러 : " .mysqli_error($conn));
   } else {
+    $_SESSION['state'] = 0;
     echo "활성화가 완료되었습니다.";
   }
-} else if($select == '비활성화') {
+} else if($select == '비활성화') { //state=1 비활성화
   $query = "UPDATE USER SET state=1 WHERE uId = $uId";
   if(!mysqli_query($conn, $query)) {
     die("비활성화 에러 : " .mysqli_error($conn));
   } else {
+    $_SESSION['state'] = 1;
     echo "비활성화가 완료되었습니다.";
   }
-} else if($select == '탈퇴') {
-  //header("location: logincheck.php");
-  //$query = "DELETE FROM USER WHERE uId = $uId";\
+} else if($select == '탈퇴') { //탈퇴
   $selectquery = "SELECT * FROM SejongDuckSNS.LIKE WHERE uId = $uId";
 
   if(mysqli_query($conn, $selectquery)) {
@@ -72,16 +74,13 @@ if($select == '활성화') {
   }
 }
 
-//echo "S".$_SESSION['loginId']."E";
-
-//echo history.go(-1); // 전 페이지로 돌아가기
-
+/* 학교, 회사, 거주지, 비밀번호를 POST로 받아오기 */
 $school = $_POST['school'];
 $company = $_POST['company'];
 $residence = $_POST['residence'];
 $password = $_POST['password'];
 
-
+/* 프로필사진 urL 받아오기 */
 $profileDir = "../img/profile/";
 $fileName = basename($_FILES['profile']['name']);
 $profilePath = $profileDir . $fileName;
@@ -99,6 +98,10 @@ if(isset($_POST["submit"]) && !empty($_FILES["profile"]["name"])){
   }
 }
 
+/* 학교, 회사, 거주지, 비밀번호, 프로필 사진 변경 */
+if($fileName == "") {
+  $fileName = 'duck.jpg';
+}
 $query = "UPDATE PROFILE
 SET school = '$school', company = '$company', residence = '$residence', profile = '$fileName'
 WHERE uId = $uId";

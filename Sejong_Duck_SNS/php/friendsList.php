@@ -182,25 +182,25 @@ mysqli_close($conn);
       </div>
     </div>
 
-    <div class='right-navigation'>
-      <a href='../home.html'>
-        <p>타임라인</p>
+    <div class="right-navigation">
+      <a href="../home.html">
+        <p>홈</p>
       </a>
-      <a href='../post.html'>
+      <a href="../post.html">
         <p>POST</p>
       </a>
-      <a href='friendsList.php'>
+      <a href="friendsList.php">
         <p>친구 목록</p>
       </a>
-      <a href='../setting.html'>
+      <a href="../setting.html">
         <p>설정</p>
       </a>
     </div>
 
 
 
-    <footer id='main-footer'>
-      here is footer <br>
+    <footer id="main-footer">
+      copyright 2019. 홍성임, 이호진. All rights reserved<br>
     </footer>
 
   </div>
