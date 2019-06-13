@@ -92,7 +92,7 @@ $num = mysqli_num_rows($result);
 $row = mysqli_fetch_assoc($result);
 if($num) { //select row 있으면
 $loginId = $row['loginId']; //post부분에서 보여질 글쓴이 아이디
-$profile = $row['profile'];
+$profile = $row['profile']; //post부분에서 보여질 글쓴이 프로필 사진 url
 ?>
 
 <table align='center'> <!-- user의 프로필 사진, 게시물 수, 친구 수, 프로필 수정으로 이동 버튼, 프로필 정보 보여주기 -->
@@ -102,9 +102,21 @@ $profile = $row['profile'];
       <td><h3><?php echo "$cntP"; ?></h3><p>게시물</p></td>
       <td><a href='friendsList.php?id=<?php echo $uId ?>'><h3><?php echo "$cntF"; ?></h3><p>친구</p></a></td>
     </tr>
+    <?php
+
+     if($uId == $_SESSION['uId']) {
+
+    ?>
+
     <tr>
-      <td colspan='2'><a href='../setting.html'><div style='border:1px solid #808080; border-radius:10px'><h4>프로필 수정</h4></dvi></a></td>
+      <td colspan='2'><a href='../setting.html?id=<?php echo $row['uId'] ?>'><div style='border:1px solid #808080; border-radius:10px'><h4>프로필 수정</h4></dvi></a></td>
     </tr>
+    <?php
+    } else {
+    ?>   <tr><td></td></tr>
+    <?php
+    }
+    ?>
     <tr style='text-align:left;'>
       <td colspan='3'><?php echo $row['name']; ?></td>
     </tr>
@@ -133,8 +145,8 @@ $postingType = 0;
 <table align='center'> <!-- 게시물을 보는 형식, 두가지 중 하나를 선택할 수 있도록 -->
   <thead align='center'>
     <tr>
-      <td style='width:50%;'><input type='button' id='btn_1' value='' style='background: url("../img/view1.jpg") no-repeat; width:32px; height:32px;' onclick='change1();'/></td>
-      <td><input type='button' id='btn_2' value='' style='background: url("../img/view2.jpg") no-repeat; width:32px; height:32px;' onclick='change2();'/></td>
+      <td style='width:50%;'><input type='button' id='btn_1' value='' style='background: url("../img/view1.jpg") no-repeat; width:32px; height:32px; cursor:pointer;' onclick='change1();'/></td>
+      <td><input type='button' id='btn_2' value='' style='background: url("../img/view2.jpg") no-repeat; width:32px; height:32px; cursor:pointer;' onclick='change2();'/></td>
     </tr>
   </thead>
 </table>
@@ -216,7 +228,7 @@ if($num) { //select row 있으면
       ?>
       <tr><!-- post 이미지 -->
         <td>
-          <?php echo "<img src = '../img/upload/".$row['url']."' style='width:50%; height:auto;'>" ?>
+          <?php echo "<img src = '../img/upload/".$row['url']."' style='width:100%; height:700px;'>" ?>
         </td>
       </tr>
       <?php
@@ -254,7 +266,7 @@ if($num) { //select row 있으면
           <input type='submit' id='reply_btn' value='게시' style='color:blue; width:10%; floar:right;'>
           <div id='replies'>
           <?php
-          $select = "SELECT r.*, u.loginId FROM REPLY AS r INNER JOIN USER as u USING (uId) WHERE pId=$pId";
+          $select = "SELECT r.*, u.name FROM REPLY AS r INNER JOIN USER as u USING (uId) WHERE pId=$pId";
           $res = mysqli_query($conn, $select);
           $nums = mysqli_num_rows($res);
 
@@ -264,7 +276,7 @@ if($num) { //select row 있으면
               if($rows['reple'] == "") {
                 continue;
               }else {
-              echo "<div style='text-align:left;'><b>".$rows['loginId']."</b> ".$rows['reple']."</div>";
+              echo "<div style='text-align:left;'><b>".$rows['name']."</b> ".$rows['reple']."</div>";
               }
             }
           } else {
@@ -295,7 +307,7 @@ mysqli_close($conn);
 
     <div class='right-navigation'>
       <a href='../home.html'>
-        <p>홈</p>
+        <p>타임라인</p>
       </a>
       <a href='../post.html'>
         <p>POST</p>
@@ -310,8 +322,8 @@ mysqli_close($conn);
 
 
 
-    <footer id="main-footer">
-      copyright 2019. 홍성임, 이호진. All rights reserved<br>
+    <footer id='main-footer'>
+      here is footer <br>
     </footer>
 
   </div>
@@ -364,8 +376,7 @@ $(document).on("click", "#reply_btn", function() {
       url : 'reply.php',
       data : formData,
       success : function(response) {
-        alert("성공~~~~~~~~~~~~");
-        alert(response);
+
       }
     });
 
