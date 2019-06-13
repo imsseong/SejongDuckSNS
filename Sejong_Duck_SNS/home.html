@@ -84,7 +84,7 @@
               <td colspan="2" id="timeline-name">
                 <span id="post-own-name"><?php echo $row['name'];?></span>
                 <?php
-                $curpId= $row['pId'];
+                $curpId= $row['pId']; //현재 pId 값 가져오기
 
                 if(!isset($_SESSION['name']) && empty($_SESSION['name'])) {
 
